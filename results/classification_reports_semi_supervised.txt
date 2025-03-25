@@ -1,0 +1,52 @@
+Classification Report for MeMo-BERT-03:
+              precision    recall  f1-score   support
+
+           1       0.82      0.84      0.83       199
+           2       0.91      0.88      0.89       200
+           3       0.90      0.90      0.90       199
+
+    accuracy                           0.87       598
+   macro avg       0.88      0.87      0.87       598
+weighted avg       0.88      0.87      0.87       598
+
+================================================================================
+
+Classification Report for DFM:
+              precision    recall  f1-score   support
+
+           1       0.77      0.79      0.78       199
+           2       0.87      0.84      0.85       200
+           3       0.89      0.90      0.90       199
+
+    accuracy                           0.84       598
+   macro avg       0.84      0.84      0.84       598
+weighted avg       0.84      0.84      0.84       598
+
+================================================================================
+
+Classification Report for e5-large:
+              precision    recall  f1-score   support
+
+           1       0.83      0.77      0.80       199
+           2       0.88      0.92      0.90       200
+           3       0.87      0.90      0.88       199
+
+    accuracy                           0.86       598
+   macro avg       0.86      0.86      0.86       598
+weighted avg       0.86      0.86      0.86       598
+
+================================================================================
+
+Classification Report for e5-large-instruct:
+              precision    recall  f1-score   support
+
+           1       0.76      0.64      0.69       199
+           2       0.83      0.90      0.86       200
+           3       0.78      0.84      0.81       199
+
+    accuracy                           0.79       598
+   macro avg       0.79      0.79      0.79       598
+weighted avg       0.79      0.79      0.79       598
+
+================================================================================
+
