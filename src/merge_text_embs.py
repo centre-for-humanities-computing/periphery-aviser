@@ -2,10 +2,11 @@ import pandas as pd
 from datasets import Dataset
 
 newspapers = ['aal_all', 'lf_all', 'od_all_clean', 'thi_all', 'vib_all']
+newspaper_aar = ['aar_all']
 
-path_root = '../../../DATA/NEWSPAPERS/'
+path_root = '../../../ROOT/DATA/NEWSPAPERS/'
 
-for nsp in newspapers:
+for nsp in newspaper_aar:
     # load embeddings
     embs = Dataset.load_from_disk(f'{path_root}embs/embeddings_e5/mean_output/{nsp}')
     embs = embs.to_pandas()
