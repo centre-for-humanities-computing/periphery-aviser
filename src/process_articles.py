@@ -101,9 +101,9 @@ def split_long_sentence(sentence: str, max_tokens: int, model: SentenceTransform
 def main(
     input_csv: Path = typer.Option(..., help="Path to CSV file with columns 'text' and 'article_id'"),
     output_dir: Path = typer.Option(..., help="Directory where the processed dataset will be saved, should be in embeddings"),
-    model_name: str = typer.Option("MiMe-MeMo/MeMo-BERT-03", help="SentenceTransformer model name for inference"),
-    max_tokens: int = typer.Option(512, help="Maximum number of tokens per chunk"),
-    prefix: str = typer.Option(None, help="Optional prefix/instruction to add to each chunk before encoding"),
+    model_name: str = typer.Option("intfloat/multilingual-e5-large", help="SentenceTransformer model name for inference"),
+    max_tokens: int = typer.Option(510, help="Maximum number of tokens per chunk"),
+    prefix: str = typer.Option('Query: ', help="Optional prefix/instruction to add to each chunk before encoding"),
     prefix_description: str = typer.Option(None, help="Short description of the prefix (used in the output directory name)"),
     
 ):
@@ -124,7 +124,7 @@ def main(
             output_path = output_dir / f"emb__{mname}_{prefix_hash}"
             logger.info(f"Hashing prefix: {prefix} == {prefix_hash}")
     else:
-        output_path = output_dir / f"raw_output/emb__{mname}"
+        output_path = output_dir / f"emb__{mname}"
 
     # Read CSV into DataFrame
     df = pd.read_csv(input_csv)
