@@ -1,0 +1,203 @@
+iteration,f1,precision,recall,prompt
+1,0.692,0.882,0.569,"
+    ""Here is an announcement in a Danish nineteenth-century newspaper. Your task is to extract book titles and authors using the following format:
+
+""
+    ""original_title: <title in Danish>
+""
+    ""translated_title: <title in English>
+""
+    ""author: <author name>
+
+""
+    ""Guidelines:
+""
+    ""1. Carefully identify the beginning and end of each book title. Look for capitalization, italics, or quotation marks that may indicate a book title.
+""
+    ""2. If the announcement mentions multiple book titles, extract each one separately.
+""
+    ""3. If the author is missing or unclear, use 'NO_AUTHOR'.
+""
+    ""4. Translate the original Danish title into English yourself for the 'translated_title'.
+""
+    ""5. Pay special attention to context - announcements may contain other text (e.g., product listings, theater plays) that should not be considered book titles.
+""
+    ""6. If no book titles are present, return exactly one row with:
+""
+    ""   original_title: NO_BOOK
+""
+    ""   translated_title: NO_BOOK
+""
+    ""   author: NO_BOOK
+
+""
+    ""Examples with books:
+""
+    ""Example1: 'Baggesens allerældste Poesier'.
+""
+    ""→ original_title: allerældste Poesier; translated_title: Oldest Poems; author: Baggesen
+""
+    ""Example2: 'Kateketisk Magasin af J. C. Wegener, Forstander for det Kongelige Skolelærer-Seminarium paa Joenstrup.'
+""
+    ""→ original_title: Kateketisk Magasin; translated_title: Catechetical Magazine; author: J.C. Wegener
+""
+    ""Example3: 'Ceres. Et periodisk Skrivt for dannede Læsere. Udgiver af F. M. Lange. Femte Hefte. Det indeholder: Juliette, eller det hemmelige Ægteskab, af Frederik Kind. - Jagtgildet, af Washington Irving. Subskription modtages hos Vogelius, Boghandler og Bogbinder.'
+""
+    ""→ original_title: Juliette, eller det hemmelige Ægteskab; translated_title: Juliette, or The Secret Marriage; author: Frederik Kind
+""
+    ""→ original_title: Jagtgildet; translated_title: The Hunting Feast; author: Washington Irving
+
+""
+    ""Examples without books:
+""
+    ""Example1: 'J. Et Parti gode hjemmegjorte Bolster og Dynevaar er i Dag arriveret og sælges billigst muligt af M. N. Samson.'
+""
+    ""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+    ""Example2: 'C. Andersen. Første Afdeling: 'Spanierne i Odense, Vaudeville i 1 Act. Anden Afdeling: 'Fem og tyve Aar derefter i Helsingøer, Vaudeville i 1 Act. Billetter a 2 Mk. 8 s., (Børn det Halve) erholdes i mit Logie hos Hr. Kobbersmed Schmidt. Hvo som tager 6 Billetter erholder disse for 2 A. Werligh. Rbd.' This is a theater announcement.
+""
+    ""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+    ""Example3: 'Første Binds andet Hefte, indeholdende følgende Katekisationer: 1 Den ægtekristelige Menneskekjærlighed bør være ufortrøden, virksom, uegennyttig og viis 2 Om de Glæder, den sande Menneskekjærlighed skjænker os 5 Om Guds Almagt; 4 Om Guds Alvidenhed; 5 OmGuds Viisdom; 6 Til Lærebogens 6 Kap. 1. 2. 5, 7 Religion er Menneskets vigtigste Anliggende.' These are chapter titles.
+""
+    ""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+    ""Use these guidelines and examples to enhance extraction accuracy and maintain the required output format.
+""
+"
+2,0.631,0.928,0.478,"Revised Prompt:
+
+""Here is an announcement in a Danish nineteenth-century newspaper. Your task is to extract book titles and authors using the following format:
+
+""
+""original_title: <title in Danish>
+""
+""translated_title: <title in English>
+""
+""author: <author name>
+
+""
+""Guidelines:
+""
+""1. Carefully identify the beginning and end of each book title. Pay attention to capitalization, italics, quotation marks, or context that may indicate a book title. Titles are often followed by a description or an author’s name.
+""
+""2. If the announcement mentions multiple book titles, extract each one separately. Ensure each title is uniquely identified.
+""
+""3. If the author is missing or unclear, use 'NO_AUTHOR'. Verify the context to ensure the correct identification of authors.
+""
+""4. Translate the original Danish title into English yourself for the 'translated_title'. Ensure the translation preserves the meaning and context of the original title.
+""
+""5. Pay special attention to context - announcements may contain other text (e.g., product listings, theater plays, chapter titles) that should not be considered book titles. Identify keywords that separate book titles from other content.
+""
+""6. If no book titles are present, return exactly one row with:
+""
+""   original_title: NO_BOOK
+""
+""   translated_title: NO_BOOK
+""
+""   author: NO_BOOK
+
+""
+""Examples with books:
+""
+""Example1: 'Baggesens allerældste Poesier'.
+""
+""→ original_title: allerældste Poesier; translated_title: Oldest Poems; author: Baggesen
+""
+""Example2: 'Kateketisk Magasin af J. C. Wegener, Forstander for det Kongelige Skolelærer-Seminarium paa Joenstrup.'
+""
+""→ original_title: Kateketisk Magasin; translated_title: Catechetical Magazine; author: J.C. Wegener
+""
+""Example3: 'Ceres. Et periodisk Skrivt for dannede Læsere. Udgiver af F. M. Lange. Femte Hefte. Det indeholder: Juliette, eller det hemmelige Ægteskab, af Frederik Kind. - Jagtgildet, af Washington Irving. Subskription modtages hos Vogelius, Boghandler og Bogbinder.'
+""
+""→ original_title: Juliette, eller det hemmelige Ægteskab; translated_title: Juliette, or The Secret Marriage; author: Frederik Kind
+""
+""→ original_title: Jagtgildet; translated_title: The Hunting Feast; author: Washington Irving
+
+""
+""Examples without books:
+""
+""Example1: 'J. Et Parti gode hjemmegjorte Bolster og Dynevaar er i Dag arriveret og sælges billigst muligt af M. N. Samson.'
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Example2: 'C. Andersen. Første Afdeling: 'Spanierne i Odense, Vaudeville i 1 Act. Anden Afdeling: 'Fem og tyve Aar derefter i Helsingøer, Vaudeville i 1 Act. Billetter a 2 Mk. 8 s., (Børn det Halve) erholdes i mit Logie hos Hr. Kobbersmed Schmidt. Hvo som tager 6 Billetter erholder disse for 2 A. Werligh. Rbd.' This is a theater announcement.
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Example3: 'Første Binds andet Hefte, indeholdende følgende Katekisationer: 1 Den ægtekristelige Menneskekjærlighed bør være ufortrøden, virksom, uegennyttig og viis 2 Om de Glæder, den sande Menneskekjærlighed skjænker os 5 Om Guds Almagt; 4 Om Guds Alvidenhed; 5 OmGuds Viisdom; 6 Til Lærebogens 6 Kap. 1. 2. 5, 7 Religion er Menneskets vigtigste Anliggende.' These are chapter titles.
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Use these guidelines and examples to enhance extraction accuracy and maintain the required output format.
+"""
+3,0.628,0.914,0.478,"Revised Prompt:
+
+""Here is an announcement in a Danish nineteenth-century newspaper. Your task is to extract book titles and authors using the following format:
+
+""
+""original_title: <title in Danish>
+""
+""translated_title: <title in English>
+""
+""author: <author name>
+
+""
+""Guidelines:
+""
+""1. Carefully identify the beginning and end of each book title. Pay attention to capitalization, italics, quotation marks, or context that may indicate a book title. Titles are often followed by a description or an author’s name.
+""
+""2. If the announcement mentions multiple book titles, extract each one separately. Ensure each title is uniquely identified.
+""
+""3. If the author is missing or unclear, use 'NO_AUTHOR'. Verify the context to ensure the correct identification of authors.
+""
+""4. Translate the original Danish title into English yourself for the 'translated_title'. Ensure the translation preserves the meaning and context of the original title.
+""
+""5. Pay special attention to context - announcements may contain other text (e.g., product listings, theater plays, chapter titles) that should not be considered book titles. Identify keywords that separate book titles from other content.
+""
+""6. If no book titles are present, return exactly one row with:
+""
+""   original_title: NO_BOOK
+""
+""   translated_title: NO_BOOK
+""
+""   author: NO_BOOK
+
+""
+""7. Avoid false positives by distinguishing between book titles and other textual elements like speeches, essays, or articles, which may not be standalone books.
+""
+""8. If a title seems overly descriptive or contains elements like 'a speech', 'an essay', or similar, reassess if it fits the criteria for a book title.
+""
+""Examples with books:
+""
+""Example1: 'Baggesens allerældste Poesier'.
+""
+""→ original_title: allerældste Poesier; translated_title: Oldest Poems; author: Baggesen
+""
+""Example2: 'Kateketisk Magasin af J. C. Wegener, Forstander for det Kongelige Skolelærer-Seminarium paa Joenstrup.'
+""
+""→ original_title: Kateketisk Magasin; translated_title: Catechetical Magazine; author: J.C. Wegener
+""
+""Example3: 'Ceres. Et periodisk Skrivt for dannede Læsere. Udgiver af F. M. Lange. Femte Hefte. Det indeholder: Juliette, eller det hemmelige Ægteskab, af Frederik Kind. - Jagtgildet, af Washington Irving. Subskription modtages hos Vogelius, Boghandler og Bogbinder.'
+""
+""→ original_title: Juliette, eller det hemmelige Ægteskab; translated_title: Juliette, or The Secret Marriage; author: Frederik Kind
+""
+""→ original_title: Jagtgildet; translated_title: The Hunting Feast; author: Washington Irving
+
+""
+""Examples without books:
+""
+""Example1: 'J. Et Parti gode hjemmegjorte Bolster og Dynevaar er i Dag arriveret og sælges billigst muligt af M. N. Samson.'
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Example2: 'C. Andersen. Første Afdeling: 'Spanierne i Odense, Vaudeville i 1 Act. Anden Afdeling: 'Fem og tyve Aar derefter i Helsingøer, Vaudeville i 1 Act. Billetter a 2 Mk. 8 s., (Børn det Halve) erholdes i mit Logie hos Hr. Kobbersmed Schmidt. Hvo som tager 6 Billetter erholder disse for 2 A. Werligh. Rbd.' This is a theater announcement.
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Example3: 'Første Binds andet Hefte, indeholdende følgende Katekisationer: 1 Den ægtekristelige Menneskekjærlighed bør være ufortrøden, virksom, uegennyttig og viis 2 Om de Glæder, den sande Menneskekjærlighed skjænker os 5 Om Guds Almagt; 4 Om Guds Alvidenhed; 5 OmGuds Viisdom; 6 Til Lærebogens 6 Kap. 1. 2. 5, 7 Religion er Menneskets vigtigste Anliggende.' These are chapter titles.
+""
+""→ original_title: NO_BOOK; translated_title: NO_BOOK; author: NO_BOOK
+""
+""Use these guidelines and examples to enhance extraction accuracy and maintain the required output format.
+"""
